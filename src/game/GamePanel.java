@@ -39,6 +39,7 @@ public class GamePanel extends Canvas implements Runnable
 	private static final double DISTANCE_BETWEEN_ENEMY_CARS=360; //This is how far away an enemy car has to be before another one is spawned.
 	private static final int CAR_WIDTH=60;
 	private static final int CAR_HEIGHT=120;
+	private int framesPerSec=TARGET_FPS;
 	
 	public GamePanel(Dimension size)
 	{	
@@ -112,7 +113,7 @@ public class GamePanel extends Canvas implements Runnable
 			
 			if(time>1000000000)
 			{
-				System.out.println(fps); 						//Used to test the games frames per second.
+				framesPerSec=fps; //Used to test the games frames per second.
 				fps=0;
 				time=0;
 			}
@@ -168,6 +169,10 @@ public class GamePanel extends Canvas implements Runnable
 		scroller.render(g);		
 		playerCar.render(g);
 		spawner.render(g);
+		
+		g.setColor(Color.WHITE);
+		g.setFont(new Font("Times New Roman", Font.BOLD, 14));
+		g.drawString("FPS: " + String.valueOf(framesPerSec) , 5, 10);
 		
 		if(spawner.checkCollision(playerCar)) //Used to make sure collision detection work properly.
 		{

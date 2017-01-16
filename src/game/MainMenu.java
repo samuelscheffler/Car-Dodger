@@ -35,9 +35,7 @@ public class MainMenu extends JPanel implements Runnable
 		start.setForeground(Color.RED);
 		start.setFont(new Font("Arial", Font.BOLD, 48));
 		start.addMouseListener(new Listener());
-		
-		System.out.println(start.getWidth());
-		
+
 		add(start);
 	}
 	

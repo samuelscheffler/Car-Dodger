@@ -21,6 +21,9 @@ public class GameTester
 		GamePanel game=new GamePanel(size);
 		game.getRender(background.getGraphics());
 		MainMenu menu=new MainMenu(size, background);
+		GameOver gameOver=new GameOver(size, background);
+		
+		gameOver.setVisible(false);
 		
 		game.frame.setResizable(false);
 		game.frame.setTitle("Car Crasher Alpha");
@@ -28,21 +31,29 @@ public class GameTester
 		
 		menu.setFocusable(true);
 		menu.requestFocus();
+		
 		game.frame.add(menu);
+		game.frame.add(gameOver);
 		game.frame.add(game);
+		gameOver.setVisible(false);
 		game.frame.setVisible(true);
 		
 		menu.waitTillStart();
 		
-		game.setFocusable(true);
-		game.requestFocus();
 		menu.setVisible(false);
 		
-		game.render();
+		game.setFocusable(true);
+		game.requestFocus();
 		
+		game.render();
 		game.start();
 		
-		System.out.println("End Game");
+		gameOver.setVisible(true);
+	
+		game.frame.repaint();
+		
+		gameOver.setFocusable(true);
+		gameOver.requestFocus();
 	}
 }
 
