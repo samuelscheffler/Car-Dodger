@@ -16,15 +16,13 @@ public class GameOver extends JPanel implements Runnable
 	private Listener listener;
 	private boolean run;
 	
-	public GameOver(Dimension size, BufferedImage background)
+	public GameOver(Dimension size)
 	{
 		super();
 		
 		setSize(size);
 		setLayout(new FlowLayout());
-		this.background=new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
-		this.background.getGraphics().drawImage(background, 0, 0, null);
-		
+
 		startOver=new JLabel("Start Over");
 		startOver.setForeground(Color.RED);
 		startOver.setFont(new Font("Arial", Font.BOLD, 48));
@@ -49,7 +47,13 @@ public class GameOver extends JPanel implements Runnable
 		g.fillRect(0, 0, getWidth(), getHeight());
 	}
 	
-	public void waitTillStart()
+	public void setBackground(BufferedImage background)
+	{
+		this.background=new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
+		this.background.getGraphics().drawImage(background, 0, 0, null);
+	}
+	
+	public void Wait()
 	{
 		try {
 			run=true;
@@ -87,7 +91,15 @@ public class GameOver extends JPanel implements Runnable
 
 		public void mouseReleased(MouseEvent e)
 		{
+			if(e.getSource()==startOver)
+			{
+				run=false;
+			}
 			
+			else if(e.getSource()==end)
+			{
+				System.exit(0);
+			}
 		}
 
 		public void mouseEntered(MouseEvent e)

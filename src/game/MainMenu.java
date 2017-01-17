@@ -46,7 +46,7 @@ public class MainMenu extends JPanel implements Runnable
 		g.fillRect(0, 0, getWidth(), getHeight());
 	}
 
-	public void waitTillStart()
+	public void Wait()
 	{
 		try{
 			run=true;

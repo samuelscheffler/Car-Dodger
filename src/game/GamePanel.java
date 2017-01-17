@@ -26,6 +26,11 @@ public class GamePanel extends Canvas implements Runnable
 	private SceneScroller scroller;
 	private Thread gameLoop;
 	
+	private int startXPos;
+	private int startYPos;
+	private Position [] lanePositions;
+	private final int NUM_LANES=3;
+	
 	public JFrame frame;
 	
 	private volatile boolean run;
@@ -47,12 +52,14 @@ public class GamePanel extends Canvas implements Runnable
 		frame=new JFrame();
 		frame.setSize(getWidth(), getHeight());
 	
-		int startXPos=(int)((getBounds().getWidth()/2)-(CAR_WIDTH/2));
-		int startYPos=(int)(getBounds().getHeight()-CAR_HEIGHT-30);
+		startXPos=(int)((getBounds().getWidth()/2)-(CAR_WIDTH/2));
+		startYPos=(int)(getBounds().getHeight()-CAR_HEIGHT-30);
 	
-		Position [] lanePositions={new Position((int)(getWidth()*(1/6.0)-(CAR_WIDTH/2)), -CAR_HEIGHT),
-								  new Position((getWidth()/2)-CAR_WIDTH/2, -CAR_HEIGHT),
-								  new Position((int)(getWidth()*(5/6.0))-CAR_WIDTH/2, -CAR_HEIGHT)};
+		lanePositions=new Position[NUM_LANES];
+		
+		lanePositions[0]=new Position((int)(getWidth()*(1/6.0)-(CAR_WIDTH/2)), -CAR_HEIGHT);
+		lanePositions[1]=new Position((getWidth()/2)-CAR_WIDTH/2, -CAR_HEIGHT);
+		lanePositions[2]=new Position((int)(getWidth()*(5/6.0))-CAR_WIDTH/2, -CAR_HEIGHT);
 			
 		playerCar=new PlayerCar(startXPos, startYPos, MOVEMENT_SPEED, getBounds());
 		spawner=new CarSpawner(SCROLL_SPEED*2, NUM_OF_ENEMY_CARS, lanePositions, getHeight()+CAR_HEIGHT*2, DISTANCE_BETWEEN_ENEMY_CARS);
@@ -83,6 +90,15 @@ public class GamePanel extends Canvas implements Runnable
 	public void stop()
 	{
 		run=false;
+	}
+	
+	public void reset()
+	{
+		playerCar=new PlayerCar(startXPos, startYPos, MOVEMENT_SPEED, getBounds());
+		spawner=new CarSpawner(SCROLL_SPEED*2, NUM_OF_ENEMY_CARS, lanePositions, getHeight()+CAR_HEIGHT*2, DISTANCE_BETWEEN_ENEMY_CARS);
+		
+		road=new RoadScene(getWidth(), getHeight());
+		scroller=new SceneScroller(road, SceneScroller.DOWN, SCROLL_SPEED);
 	}
 	
 	public void pause()

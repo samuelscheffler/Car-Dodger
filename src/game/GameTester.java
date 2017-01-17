@@ -21,7 +21,7 @@ public class GameTester
 		GamePanel game=new GamePanel(size);
 		game.getRender(background.getGraphics());
 		MainMenu menu=new MainMenu(size, background);
-		GameOver gameOver=new GameOver(size, background);
+		GameOver gameOver=new GameOver(size);
 		
 		gameOver.setVisible(false);
 		
@@ -38,22 +38,37 @@ public class GameTester
 		gameOver.setVisible(false);
 		game.frame.setVisible(true);
 		
-		menu.waitTillStart();
+		menu.Wait();
 		
 		menu.setVisible(false);
 		
-		game.setFocusable(true);
-		game.requestFocus();
+		while(true)
+		{
+			game.setFocusable(true);
+			game.requestFocus();
+			
+			game.render();
+			game.start();
+			
+			background.flush();
+			game.getRender(background.getGraphics());
+			
+			gameOver.setBackground(background);
+			
+			gameOver.setVisible(true);
 		
-		game.render();
-		game.start();
+			game.frame.repaint();
+			
+			gameOver.setFocusable(true);
+			gameOver.requestFocus();
+			
+			gameOver.Wait();
 		
-		gameOver.setVisible(true);
-	
-		game.frame.repaint();
-		
-		gameOver.setFocusable(true);
-		gameOver.requestFocus();
+			game.reset();
+			game.render();
+			gameOver.setVisible(false);
+		}
+			
 	}
 }
 
